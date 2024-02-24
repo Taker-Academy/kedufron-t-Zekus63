@@ -13,3 +13,20 @@ header {
     display: flex;
     justify-content: center;
 }
+
+.my_liste {
+    display: grid;
+    padding: 20px;
+    gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+
+}
+
+.liste_element {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    justify-items: center;
+    background-color: white;
+}
