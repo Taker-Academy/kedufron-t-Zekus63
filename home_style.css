@@ -8,7 +8,7 @@ body {
     background-color: #d6a793;
 }
 
-header {
+.logo {
     margin-top: 20px;
     display: flex;
     justify-content: center;
@@ -29,18 +29,4 @@ header {
     grid-template-rows: auto auto auto;
     justify-items: center;
     background-color: white;
-}
-
-.shop {
-    position: fixed;
-    bottom: 50px;
-    right: 50px;
-    height: 70px;
-    width: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(204, 122, 86);
-    border-radius: 50%;
-    color: white;
 }

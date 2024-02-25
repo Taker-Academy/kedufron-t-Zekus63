@@ -8,8 +8,25 @@ body {
     background-color: #d6a793;
 }
 
-header {
+.logo {
     margin-top: 20px;
     display: flex;
     justify-content: center;
+}
+
+#main {
+    margin-top: 50px;
+    /* padding-inline: 50px; */
+    border-radius: 20px 0 0 20px;
+    margin-inline: 50px;
+    display: flex;
+    gap: 20px;
+    background: linear-gradient(to right, rgb(255, 255, 255) 40%, transparent);
+}
+
+.element_info {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 1fr 1fr 1fr;
+    align-items: center;
 }

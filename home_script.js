@@ -1,12 +1,22 @@
 const APIurl = 'https://api.kedufront.juniortaker.com/';
 
+if (!localStorage.getItem("order")) {
+  let order = new Object();
+  order.email = null;
+  order.name = null;
+  order.address = null;
+  order.cart = [];
+  localStorage.setItem("order", JSON.stringify(order));
+}
+
+let order = JSON.parse(localStorage.getItem("order"));
+
 function liste() {
   axios
   .get(APIurl + "item/")
   .then((liste_data) => {
     const disp = document.createElement('main');
     disp.className = "my_liste";
-    console.log(liste_data);
     for (let index = 0; index < Object.keys(liste_data.data).length; index++) {
       const element = document.createElement('atticle');
       element.classList.add("liste_element", liste_data.data[index]._id);

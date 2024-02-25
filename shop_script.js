@@ -17,5 +17,4 @@ function shop_bouton() {
     logo.classList.add("fa-solid", "fa-cart-shopping", "fa-2xl");
     element.appendChild(logo);
     emplacement.appendChild(element);
-    // document.body.appendChild(element);
 }
