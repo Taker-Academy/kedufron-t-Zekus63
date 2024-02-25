@@ -1,0 +1,15 @@
+@font-face {
+	font-family: 'Hestina';
+	src: url("objets/font/Hestina_Font_by_Keithzo.otf") format("opentype");
+}
+
+body {
+    font-family: 'Hestina', serif;
+    background-color: #d6a793;
+}
+
+header {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}

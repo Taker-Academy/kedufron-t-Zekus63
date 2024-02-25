@@ -25,7 +25,7 @@ function liste() {
         img.style.objectFit = "cover";
         element.appendChild(img);
         const price = document.createElement('footer');
-        price.textContent = liste_data.data[index].price;
+        price.textContent = liste_data.data[index].price + " €";
         price.style.marginBlock = "0";
         element.appendChild(price);
       })
