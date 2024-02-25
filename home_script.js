@@ -6,6 +6,10 @@ if (!localStorage.getItem("order")) {
   order.name = null;
   order.address = null;
   order.cart = [];
+  order.cart[0] = {
+    id: 2,
+    amount: 2,
+  }
   localStorage.setItem("order", JSON.stringify(order));
 }
 
@@ -17,7 +21,7 @@ function liste() {
   .then((liste_data) => {
     const disp = document.createElement('main');
     disp.className = "my_liste";
-    for (let index = 0; index < Object.keys(liste_data.data).length; index++) {
+    for (let index = 0; index < liste_data.data.length; index++) {
       const element = document.createElement('atticle');
       element.classList.add("liste_element", liste_data.data[index]._id);
       element.onclick = function(){window.location.href="info.html" + "?item_id=" + element.classList[1];};

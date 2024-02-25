@@ -1,6 +1,6 @@
 const APIurl = 'https://api.kedufront.juniortaker.com/';
 const urlparams = new URLSearchParams(window.location.search);
-const item_id = urlparams.get('item_id')
+const item_id = parseInt(urlparams.get('item_id'));
 
 if (!localStorage.getItem("order")) {
   let order = new Object();
@@ -18,6 +18,7 @@ function print_info() {
     axios
     .get(APIurl + "item/" + item_id)
     .then((liste_data) => {
+
         const disp = document.getElementById('main');
 
         axios
@@ -49,16 +50,43 @@ function print_info() {
         description.style.fontSize = "30px";
         info.appendChild(description);
         
+
+        const shop = document.createElement('div');
+        shop.className = "element_shop";
+
         const price = document.createElement('p');
-        price.className = "element_price";
         price.textContent = liste_data.data.item.price + " €";
         price.style.marginBlock = "0";
         price.style.fontSize = "30px";
-        info.appendChild(price);
+        shop.appendChild(price);
+
+        const price_buton = document.createElement('div');
+        var index = 0;
+        for (; index < order.cart.length && order.cart[index].id != item_id; index++) {}
+        if (index < order.cart.length && order.cart[index].id == item_id) {
+            price_buton.textContent = "Suprimer du panier";
+        } else {
+            price_buton.textContent = "Ajouter au panier";
+        }
+        price_buton.onclick = function(){
+            if (price_buton.textContent == "Suprimer du panier") {
+                price_buton.textContent = "Ajouter au panier";
+                order.cart.splice(index, 1); 
+                localStorage.setItem("order", JSON.stringify(order));
+            } else {
+                price_buton.textContent = "Suprimer du panier";
+                order.cart[index] = {id: item_id, amount: 1,}; 
+                localStorage.setItem("order", JSON.stringify(order));
+                localStorage.setItem("order", JSON.stringify(order));
+            }
+        };
+        price_buton.style.fontFamily = "Arial, Helvetica, sans-serif";
+        shop.appendChild(price_buton);
+
+        info.appendChild(shop);
 
         disp.appendChild(info);
 
 
-        // const 
     })
   }
