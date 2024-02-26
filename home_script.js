@@ -1,15 +1,11 @@
 const APIurl = 'https://api.kedufront.juniortaker.com/';
-
+// localStorage.removeItem("order");
 if (!localStorage.getItem("order")) {
   let order = new Object();
   order.email = null;
   order.name = null;
   order.address = null;
   order.cart = [];
-  order.cart[0] = {
-    id: 2,
-    amount: 2,
-  }
   localStorage.setItem("order", JSON.stringify(order));
 }
 
@@ -19,6 +15,7 @@ function liste() {
   axios
   .get(APIurl + "item/")
   .then((liste_data) => {
+    console.log(liste_data);
     const disp = document.createElement('main');
     disp.className = "my_liste";
     for (let index = 0; index < liste_data.data.length; index++) {
@@ -47,4 +44,25 @@ function liste() {
     }
     document.body.appendChild(disp);
   })
+}
+
+function shop_bouton() {
+  const emplacement = document.getElementById("my_nav");
+  const element = document.createElement('div');
+  element.onclick = function(){window.location.href="shop.html";};
+  element.style.position = "fixed";
+  element.style.bottom = "50px";
+  element.style.right = "50px";
+  element.style.height = "70px";
+  element.style.width = "70px";
+  element.style.display = "flex";
+  element.style.justifyContent = "center";
+  element.style.alignItems = "center";
+  element.style.backgroundColor = "rgb(204, 122, 86)";
+  element.style.borderRadius = "50%";
+  element.style.color = "white";
+  const logo = document.createElement('i');
+  logo.classList.add("fa-solid", "fa-cart-shopping", "fa-2xl");
+  element.appendChild(logo);
+  emplacement.appendChild(element);
 }
