@@ -1,5 +1,5 @@
 const APIurl = 'https://api.kedufront.juniortaker.com/';
-// localStorage.removeItem("order");
+
 if (!localStorage.getItem("order")) {
   let order = new Object();
   order.email = null;
@@ -16,7 +16,7 @@ function liste() {
   .get(APIurl + "item/")
   .then((liste_data) => {
     console.log(liste_data);
-    const disp = document.createElement('main');
+    const disp = document.getElementById('main');
     disp.className = "my_liste";
     for (let index = 0; index < liste_data.data.length; index++) {
       const element = document.createElement('atticle');
@@ -27,22 +27,23 @@ function liste() {
       .then((image_data) => {
         const name = document.createElement('header');
         name.textContent = liste_data.data[index].name;
-        name.style.marginBlock = "0";
+        name.style.marginInline = "auto";
         name.style.fontSize = "30px";
         element.appendChild(name);
         const img = document.createElement('img');
         img.src = image_data.config.url;
-        img.style.height = "200px";
-        img.style.objectFit = "cover";
+        img.style.marginInline = "auto";
         element.appendChild(img);
-        const price = document.createElement('footer');
-        price.textContent = liste_data.data[index].price + " €";
+        const price = document.createElement('element_footer');
+        price.className = "element_footer";
         price.style.marginBlock = "0";
+        price.style.justifyContent = "end";
+        price.style.marginRight = "15px";
+        price.textContent = liste_data.data[index].price + " €";
         element.appendChild(price);
       })
       disp.appendChild(element); 
     }
-    document.body.appendChild(disp);
   })
 }
 

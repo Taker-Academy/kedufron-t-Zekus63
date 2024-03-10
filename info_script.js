@@ -1,6 +1,11 @@
 const APIurl = 'https://api.kedufront.juniortaker.com/';
 const urlparams = new URLSearchParams(window.location.search);
-const item_id = parseInt(urlparams.get('item_id'));
+var item_id = parseInt(urlparams.get('item_id'));
+console.log(typeof(item_id), item_id);
+
+if (isNaN(item_id)) {
+    window.location.href="home.html";
+}
 
 if (!localStorage.getItem("order")) {
   let order = new Object();
@@ -20,16 +25,25 @@ function print_info() {
     .then((liste_data) => {
 
         const disp = document.getElementById('main');
+        disp.style.minHeight = "500px";
 
+        const img_div = document.createElement('div');
+        img_div.style.display = "flex";
+        img_div.style.alignItems = "center";
+        img_div.style.justifyItems = "center";
         axios
         .get(APIurl + "item/picture/" + liste_data.data.item.image)
         .then((image_data) => {
             const img = document.createElement('img');
             img.src = image_data.config.url;
-            img.style.height = "500px";
+            img.style.height = "auto";
+            // img.style.width = "500px";
+            img.style.maxWidth = "500px";
             img.style.objectFit = "cover";
-            disp.appendChild(img);
+            img.style.borderRadius = "20px";
+            img_div.appendChild(img);
         })
+        disp.appendChild(img_div);
 
 
         const info = document.createElement('article');
@@ -49,37 +63,38 @@ function print_info() {
         description.style.marginBlock = "0";
         description.style.fontSize = "30px";
         info.appendChild(description);
+
+        const createin = document.createElement('p');
+        createin.className = "element_createin";
+        createin.style.fontFamily = "Arial, Helvetica, sans-serif";
+        createin.textContent = "create in : " + liste_data.data.item.createdIn;
+        createin.style.marginBlock = "0";
+        createin.style.fontSize = "20px";
+        info.appendChild(createin);
         
 
         const shop = document.createElement('div');
         shop.className = "element_shop";
 
         const price = document.createElement('p');
+        console.log(liste_data.data.item.price);
+        console.log(liste_data);
         price.textContent = liste_data.data.item.price + " €";
         price.style.marginBlock = "0";
         price.style.fontSize = "30px";
         shop.appendChild(price);
 
         const price_buton = document.createElement('div');
-        var index = 0;
-        for (; index < order.cart.length && order.cart[index].id != item_id; index++) {}
-        if (index < order.cart.length && order.cart[index].id == item_id) {
-            price_buton.textContent = "Suprimer du panier";
-        } else {
-            price_buton.textContent = "Ajouter au panier";
-        }
+        price_buton.className = "button";
+        price_buton.textContent = "Ajouter au panier";
         price_buton.onclick = function(){
-            if (price_buton.textContent == "Suprimer du panier") {
-                price_buton.textContent = "Ajouter au panier";
-                order.cart.splice(index, 1); 
+            if (order.cart.map(el => el.id).indexOf(liste_data.data.item._id) == -1) {
+                order.cart.push({id: item_id, amount: 1,});
                 localStorage.setItem("order", JSON.stringify(order));
             } else {
-                price_buton.textContent = "Suprimer du panier";
-                order.cart[index] = {id: item_id, amount: 1,}; 
-                localStorage.setItem("order", JSON.stringify(order));
+                order.cart[order.cart.map(el => el.id).indexOf(liste_data.data.item._id)].amount++;
                 localStorage.setItem("order", JSON.stringify(order));
             }
-            console.log(order);
         };
         price_buton.style.fontFamily = "Arial, Helvetica, sans-serif";
         shop.appendChild(price_buton);
@@ -87,8 +102,9 @@ function print_info() {
         info.appendChild(shop);
 
         disp.appendChild(info);
-
-
+    })
+    .catch(function (error) {
+        window.location.href="home.html";
     })
 }
 
